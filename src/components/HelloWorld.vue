@@ -11,7 +11,6 @@ export default {
 <style lang="scss" scoped>
 h1 {
     font-size: 1.4em;
-
     span.yellow {
         color: yellow;
         text-decoration: underline;
