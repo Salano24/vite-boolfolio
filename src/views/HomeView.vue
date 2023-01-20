@@ -77,7 +77,7 @@ export default {
                     </ul>
                 </nav>
             </template>
-            <template>
+            <template v-else>
                 <h2>No project found...</h2>
             </template>
         </template>

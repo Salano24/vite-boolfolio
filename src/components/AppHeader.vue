@@ -17,6 +17,7 @@ export default {
                 <div class="collapse navbar-collapse" id="collapsibleNavId">
                     <ul class="navbar-nav me-auto mt-2 mt-lg-0">
                         <li class="nav-item">
+                            
                             <router-link class="nav-link" :class="$route.name == 'home' ? 'active' : ''" :to="{ name: 'home' }">Home</router-link>                        </li>
 
                         <li class="nav-item">
