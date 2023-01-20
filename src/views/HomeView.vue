@@ -1,10 +1,12 @@
 <script>
 import axios from 'axios';
 import ProjectCard from '../components/ProjectCard.vue';
+import AppHeader from '../components/AppHeader.vue';
 export default {
     name: "AppMain",
     components: {
-        ProjectCard
+        ProjectCard,
+        AppHeader,
     },
     data() {
         return {
@@ -49,6 +51,7 @@ export default {
         </template>
         <template v-else>
             <template v-if="projects">
+            <AppHeader />    
             <h1 class="mb-3">Projects</h1>
 
             <div class="row row-cols-1 row-cols-md-3 g-3">
@@ -76,6 +79,7 @@ export default {
                         </li>
                     </ul>
                 </nav>
+                
             </template>
             <template v-else>
                 <h2>No project found...</h2>
