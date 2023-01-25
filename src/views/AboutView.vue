@@ -1,10 +1,19 @@
 <script>
+import AppHeader from '../components/AppHeader.vue';
 export default {
-    name: 'AboutView',
+    name: "AboutView",
+    components: {
+       
+        AppHeader,
+    },
+
 }
 </script>
 
 <template>
+     
+            <AppHeader /> 
+
     <div class="container my-4">
         <h1>About Section</h1>
         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Harum, architecto hic. Facere, quas officiis culpa
@@ -47,5 +56,3 @@ export default {
 </template>
 
 
-<style lang="scss" scoped>
-</style>

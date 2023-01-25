@@ -46,9 +46,9 @@ export default {
 
 <template>
    
+    <AppHeader />    
         <div class="container ">
       
-            <AppHeader />    
             <h1 class="mb-3">Projects</h1>
 
             <div v-if="!loading && projects">
@@ -66,7 +66,7 @@ export default {
 
                         <li class="page-item" v-for="i in projects.last_page">
                             <button class="page-link" :class="projects.current_page == i ? 'active' : ''"
-                            @click.preventDefault()="getProjects(store.apiUrl + '/api/projects?page=' + i)">                                
+                            @click.preventDefault()="getProjects(this.apiUrl + '/api/projects?page=' + i)">                                
                             {{ i }}
                             </button>
                         </li>
