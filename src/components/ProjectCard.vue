@@ -1,4 +1,6 @@
 <script>
+import { store } from './store';
+
 export default {
     name: "ProjectList",
     props: {
@@ -6,8 +8,8 @@ export default {
     },
     data() {
         return {
-            apiUrl: 'http://127.0.0.1:8000',
-           
+            max: 100,
+            store           
         }
     },
     methods: {
@@ -16,29 +18,7 @@ export default {
                 return text.slice(0, this.max) + '...'
             }
             return text
-        },
-        getImage(img) {
-            // console.log(img);
-            if (img) {
-                return this.apiUrl + '/storage/' + img;
-            }
-            return 'https://garrettmuseumofart.org/wp-content/uploads/2016/03/placeholder_template-300x200.jpg';
-        },
-        getType(project) {
-            if (project.type) {
-                return project.type.name;
-            }
-            return 'No type';
-        },
-        getTechnologies(project) {
-            if (project.technologies.length > 0) {
-                let techs = '';
-                project.technologies.forEach(technology => {
-                    techs = techs + technology.name + ' ';
-                });
-                return techs;
-            }
-            return 'No technologies'
+       
         }
     }
 }
@@ -47,14 +27,14 @@ export default {
 <template>
     <div class="col">
         <div class="card h-100">
-            <img class="card-img-top" :src="getImage(project.cover_image)" :alt="project.title">
+            <img class="card-img-top" :src="store.getImage(project.cover_image)" :alt="project.title">
             <div class="card-body">
                 <h4 class="card-title">{{ project.title }}</h4>
                 <p class="card-slug"><strong>Slug:</strong> {{ project.slug }}</p>
                 
                 <div class="mb-2">
-                    <div class="mb-3"><strong>Type</strong>: {{ getType(project) }}</div>
-                    <div><strong>Technologies</strong>: {{ getTechnologies(project) }}</div>
+                    <div class="mb-3"><strong>Type</strong>: {{ store.getType(project) }}</div>
+                    <div><strong>Technologies</strong>: {{ store.getTechnologies(project) }}</div>
                 </div>
                 <p class="card-text"><strong>Description: </strong>{{ trimBody(project.description) }}</p>
 

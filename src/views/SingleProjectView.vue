@@ -1,52 +1,26 @@
 <script>
+import { store } from '../components/store.js';
 import axios from 'axios';
 export default {
     name: 'SingleProjectView',
     data() {
         return {
-            apiUrl: 'http://localhost:8000',
             project: null,
-            loading: true
-        }
-    },
-    methods: {
-        getImage(img) {
-            // console.log(img);
-            if (img) {
-                return this.apiUrl + '/storage/' + img;
-            }
-            return 'https://via.placeholder.com/600x300.png?text=Cover+Image';
-        },
-        getType(project) {
-            if (project.type) {
-                return project.type.name;
-            }
-            return 'No type';
-        },
-        getTechnologies(project) {
-            if (project.technologies.length > 0) {
-                let techs = '';
-                project.technologies.forEach(technology => {
-                    techs = techs + technology.name + ' ';
-                });
-                return techs;
-            }
-            return 'No technologies';
+            loading: true,
+            store
         }
     },
     mounted() {
-        const url = this.apiUrl + '/api/projects/' + this.$route.params.slug;
+        const url = store.apiUrl + '/api/projects/' + this.$route.params.slug;
         // console.log(url);
         axios.get(url)
             .then(response => {
-                if (response.data.results.length !== 0) {
-                    this.project = response.data.results[0];
+                if (response.data.success) {
+                    // console.log(response.data.results);
+                    this.project = response.data.results;
                     this.loading = false;
-                    // console.log(this.project);
                 } else {
-                    this.project = 'no-project';
                     this.loading = false;
-                    // console.log(this.project);
                 }
             }).catch(error => {
                 console.log(error);
@@ -57,29 +31,33 @@ export default {
 
 <template>
     <div class="container my-4">
-        <template v-if="loading">
-            <h2>Loading project...</h2>
-        </template>
-        <template v-else>
-            <template v-if="project !== 'no-project'">
-                <img class="img-fluid" :src="getImage(project.cover_img)" :alt="project.name">
 
-                <h1 class="my-3">{{ project.name }}</h1>
+        <!-- if loading is ended and there is the project -->
+        <div v-if="!loading && project">
+            <!-- project imgage or placeholder -->
+            <img class="img-fluid" :src="store.getImage(project.cover_image)" :alt="project.title">
 
-                <div class="mb-2">
-                    <div><strong>Type</strong>: {{ getType(project) }}</div>
-                    <div><strong>Technologies</strong>: {{ getTechnologies(project) }}</div>
-                </div>
+            <!-- project title -->
+            <h1 class="my-3">{{ project.title }}</h1>
 
-                <p>{{ project.body }}</p>
-            </template>
-            <template v-else>
-                <h2>No project found...</h2>
-            </template>
-        </template>
+            <!-- project type and technologies -->
+            <div class="mb-2">
+                <div><strong>Type</strong>: {{ store.getType(project) }}</div>
+                <div><strong>Technologies</strong>: {{ store.getTechnologies(project) }}</div>
+            </div>
+
+            <!-- project body -->
+            <p>{{ project.description }}</p>
+           
+        </div>
+
+        <h2 v-else-if="!loading">No project found...</h2>
+
+        <h2 v-else>Loading project...</h2>
     </div>
 </template>
 
-
+<style lang="scss" scoped>
+</style>
 <style lang="scss" scoped>
 </style>
